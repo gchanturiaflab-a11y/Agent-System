@@ -92,7 +92,14 @@
 
 <!-- Modal form -->
 {#if showForm}
-	<div class="modal-overlay" onclick={(e) => e.target === e.currentTarget && (showForm = false)}>
+	<div
+		class="modal-overlay"
+		role="dialog"
+		aria-modal="true"
+		tabindex="-1"
+		onclick={(e) => e.target === e.currentTarget && (showForm = false)}
+		onkeydown={(e) => e.key === 'Escape' && (showForm = false)}
+	>
 		<div class="modal slide-up">
 			<div class="modal-header">
 				<div class="modal-title">
@@ -118,7 +125,23 @@
 								onclick={() => formData.role = role}
 							>
 								<span class="role-opt-icon">
-									<svelte:component this={cfg.icon} size={14} strokeWidth={1.75} />
+									{#if role === 'scanner'}
+										<Search size={14} strokeWidth={1.75} />
+									{:else if role === 'orchestrator'}
+										<Network size={14} strokeWidth={1.75} />
+									{:else if role === 'architect'}
+										<PenTool size={14} strokeWidth={1.75} />
+									{:else if role === 'coder'}
+										<Code2 size={14} strokeWidth={1.75} />
+									{:else if role === 'tester'}
+										<TestTube size={14} strokeWidth={1.75} />
+									{:else if role === 'reviewer'}
+										<Microscope size={14} strokeWidth={1.75} />
+									{:else if role === 'documenter'}
+										<FileText size={14} strokeWidth={1.75} />
+									{:else if role === 'debugger'}
+										<Bug size={14} strokeWidth={1.75} />
+									{/if}
 								</span>
 								<span class="role-opt-name">{role}</span>
 							</button>
@@ -198,7 +221,14 @@
 
 <!-- Delete confirm modal -->
 {#if confirmDelete}
-	<div class="modal-overlay" onclick={(e) => e.target === e.currentTarget && (confirmDelete = null)}>
+	<div
+		class="modal-overlay"
+		role="dialog"
+		aria-modal="true"
+		tabindex="-1"
+		onclick={(e) => e.target === e.currentTarget && (confirmDelete = null)}
+		onkeydown={(e) => e.key === 'Escape' && (confirmDelete = null)}
+	>
 		<div class="modal slide-up" style="max-width: 380px">
 			<div class="modal-body" style="padding: 1.5rem">
 				<div class="confirm-icon"><Trash2 size={28} strokeWidth={1.5} /></div>
@@ -237,7 +267,25 @@
 					<div class="card-top">
 						<div class="card-avatar">
 							<span class="card-avatar-icon">
-								<svelte:component this={cfg.icon} size={16} strokeWidth={1.75} />
+								{#if agent.role === 'scanner'}
+									<Search size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'orchestrator'}
+									<Network size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'architect'}
+									<PenTool size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'coder'}
+									<Code2 size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'tester'}
+									<TestTube size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'reviewer'}
+									<Microscope size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'documenter'}
+									<FileText size={16} strokeWidth={1.75} />
+								{:else if agent.role === 'debugger'}
+									<Bug size={16} strokeWidth={1.75} />
+								{:else}
+									<Code2 size={16} strokeWidth={1.75} />
+								{/if}
 							</span>
 						</div>
 						<div class="card-info">

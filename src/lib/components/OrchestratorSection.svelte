@@ -412,7 +412,6 @@
 		box-shadow: 0 0 24px color-mix(in srgb, var(--p-color-neutral-950) 14%, transparent);
 		animation: none;
 	}
-	.run-icon { font-size: 1rem; }
 	.run-hint {
 		font-size: 0.7rem;
 		font-weight: 400;

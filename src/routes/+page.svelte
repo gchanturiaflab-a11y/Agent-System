@@ -345,9 +345,6 @@
 		gap: 0.625rem;
 		margin: 0 0 0.375rem;
 	}
-	.title-icon {
-		font-size: 1.25rem;
-	}
 	.panel-subtitle {
 		font-size: 0.875rem;
 		color: var(--color-text-muted);

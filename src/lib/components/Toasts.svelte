@@ -1,19 +1,22 @@
 <script>
 	import { toasts } from '../stores.js';
 	import { Check, X, Info, AlertTriangle } from '@lucide/svelte';
-
-	const icons = {
-		success: Check,
-		error: X,
-		info: Info,
-		warn: AlertTriangle
-	};
 </script>
 
 <div class="toast-container">
 	{#each $toasts as toast (toast.id)}
 		<div class="toast toast-{toast.type}">
-			<span class="toast-icon toast-icon-{toast.type}"><svelte:component this={icons[toast.type] || icons.info} size={11} strokeWidth={2.5} /></span>
+			<span class="toast-icon toast-icon-{toast.type}">
+				{#if toast.type === 'success'}
+					<Check size={11} strokeWidth={2.5} />
+				{:else if toast.type === 'error'}
+					<X size={11} strokeWidth={2.5} />
+				{:else if toast.type === 'warn'}
+					<AlertTriangle size={11} strokeWidth={2.5} />
+				{:else}
+					<Info size={11} strokeWidth={2.5} />
+				{/if}
+			</span>
 			<span class="toast-msg">{toast.message}</span>
 		</div>
 	{/each}
@@ -22,26 +25,26 @@
 <style>
 	.toast-container {
 		position: fixed;
-		bottom: 1.5rem;
-		right: 1.5rem;
+		bottom: calc(var(--spacing) * 6);
+		right: calc(var(--spacing) * 6);
 		z-index: 200;
 		display: flex;
 		flex-direction: column;
-		gap: 0.625rem;
+		gap: calc(var(--spacing) * 2.5);
 		pointer-events: none;
 	}
 
 	.toast {
 		display: flex;
 		align-items: flex-start;
-		gap: 0.625rem;
-		padding: 0.75rem 1rem;
-		border-radius: 12px;
-		min-width: 260px;
-		max-width: 380px;
-		font-size: 0.8125rem;
+		gap: calc(var(--spacing) * 2.5);
+		padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4);
+		border-radius: var(--radius-lg);
+		min-width: calc(var(--spacing) * 65);
+		max-width: calc(var(--spacing) * 95);
+		font-size: var(--text-sm);
 		font-weight: 500;
-		border: 1px solid;
+		border: var(--p-border-width-1) solid;
 		animation: slide-in-right 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
@@ -72,13 +75,13 @@
 	}
 
 	.toast-icon {
-		width: 18px;
-		height: 18px;
+		width: calc(var(--spacing) * 4.5);
+		height: calc(var(--spacing) * 4.5);
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 0.625rem;
+		font-size: var(--text-2xs);
 		font-weight: 900;
 		flex-shrink: 0;
 		margin-top: 0.05rem;
