@@ -1,2 +1,490 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
+
+@theme {
+	--color-kceva-bg: #0a0f0a;
+	--color-kceva-surface: #0f1610;
+	--color-kceva-surface-2: #141d15;
+	--color-kceva-border: #1e2a1f;
+	--color-kceva-border-bright: #2a3d2b;
+	--color-kceva-green: #4ade80;
+	--color-kceva-green-bright: #6ee7a0;
+	--color-kceva-green-dim: #2d5a3d;
+	--color-kceva-green-glow: rgba(74, 222, 128, 0.4);
+	--color-kceva-amber: #fbbf24;
+	--color-kceva-red: #f87171;
+	--color-kceva-blue: #60a5fa;
+	--color-kceva-text: #e8f0e8;
+	--color-kceva-text-dim: #8a9a8a;
+	--color-kceva-text-faint: #5a6a5a;
+
+	--font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+	--font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+	:root {
+		color-scheme: dark;
+	}
+
+	body {
+		background-color: var(--color-kceva-bg);
+		color: var(--color-kceva-text);
+		font-family: var(--font-sans);
+		background-image:
+			radial-gradient(circle at 20% 0%, rgba(74, 222, 128, 0.04) 0%, transparent 50%),
+			radial-gradient(circle at 80% 100%, rgba(74, 222, 128, 0.03) 0%, transparent 50%);
+		background-attachment: fixed;
+		min-height: 100vh;
+	}
+
+	* {
+		border-color: var(--color-kceva-border);
+	}
+
+	::selection {
+		background-color: rgba(74, 222, 128, 0.25);
+	}
+
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: var(--color-kceva-surface);
+	}
+	::-webkit-scrollbar-thumb {
+		background: var(--color-kceva-border-bright);
+		border-radius: 4px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--color-kceva-green-dim);
+	}
+}
+
+@layer components {
+	.kceva-card {
+		background-color: var(--color-kceva-surface);
+		border: 1px solid var(--color-kceva-border);
+		border-radius: 12px;
+		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.kceva-card:hover {
+		border-color: var(--color-kceva-border-bright);
+	}
+
+	.kceva-input {
+		background-color: var(--color-kceva-surface-2);
+		border: 1px solid var(--color-kceva-border);
+		border-radius: 8px;
+		color: var(--color-kceva-text);
+		padding: 0.625rem 0.875rem;
+		font-size: 0.875rem;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+		width: 100%;
+	}
+
+	.kceva-input:focus {
+		outline: none;
+		border-color: var(--color-kceva-green);
+		box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+	}
+
+	.kceva-input::placeholder {
+		color: var(--color-kceva-text-faint);
+	}
+
+	.kceva-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border-radius: 8px;
+		font-size: 0.875rem;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		cursor: pointer;
+		border: 1px solid transparent;
+	}
+
+	.kceva-btn-primary {
+		background-color: var(--color-kceva-green);
+		color: #0a0f0a;
+		font-weight: 600;
+	}
+
+	.kceva-btn-primary:hover {
+		background-color: var(--color-kceva-green-bright);
+		box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+	}
+
+	.kceva-btn-primary:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.kceva-btn-ghost {
+		background-color: transparent;
+		color: var(--color-kceva-text-dim);
+		border-color: var(--color-kceva-border);
+	}
+
+	.kceva-btn-ghost:hover {
+		color: var(--color-kceva-text);
+		border-color: var(--color-kceva-border-bright);
+		background-color: var(--color-kceva-surface-2);
+	}
+
+	.kceva-btn-danger {
+		background-color: transparent;
+		color: var(--color-kceva-red);
+		border-color: rgba(248, 113, 113, 0.3);
+	}
+
+	.kceva-btn-danger:hover {
+		background-color: rgba(248, 113, 113, 0.1);
+		border-color: rgba(248, 113, 113, 0.5);
+	}
+
+	.kceva-label {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--color-kceva-text-dim);
+	}
+
+	.kceva-status-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		display: inline-block;
+		flex-shrink: 0;
+	}
+
+	.kceva-status-idle {
+		background-color: var(--color-kceva-text-faint);
+	}
+
+	.kceva-status-running {
+		background-color: var(--color-kceva-green);
+		box-shadow: 0 0 8px var(--color-kceva-green-glow);
+		animation: pulse-dot 1.5s ease-in-out infinite;
+	}
+
+	.kceva-status-done {
+		background-color: var(--color-kceva-green);
+	}
+
+	.kceva-status-failed {
+		background-color: var(--color-kceva-red);
+	}
+
+	.kceva-status-retrying {
+		background-color: var(--color-kceva-amber);
+		animation: pulse-dot 1s ease-in-out infinite;
+	}
+
+	.kceva-status-scanning {
+		background-color: var(--color-kceva-blue);
+		animation: pulse-dot 1.5s ease-in-out infinite;
+	}
+
+	.kceva-status-validating {
+		background-color: var(--color-kceva-amber);
+		animation: pulse-dot 1.5s ease-in-out infinite;
+	}
+
+	/* Animated green border for active/running agents */
+	.kceva-active-border {
+		position: relative;
+	}
+
+	.kceva-active-border::before {
+		content: '';
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		padding: 1px;
+		background: conic-gradient(
+			from var(--angle, 0deg),
+			transparent 0%,
+			transparent 70%,
+			var(--color-kceva-green) 85%,
+			var(--color-kceva-green-bright) 90%,
+			transparent 100%
+		);
+		-webkit-mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		animation: rotate-border 3s linear infinite;
+		pointer-events: none;
+	}
+
+	@property --angle {
+		syntax: '<angle>';
+		initial-value: 0deg;
+		inherits: false;
+	}
+
+	.kceva-glow {
+		box-shadow:
+			0 0 0 1px rgba(74, 222, 128, 0.2),
+			0 0 20px rgba(74, 222, 128, 0.08);
+	}
+
+	.kceva-glow-active {
+		box-shadow:
+			0 0 0 1px rgba(74, 222, 128, 0.3),
+			0 0 30px rgba(74, 222, 128, 0.15);
+	}
+
+	.kceva-tree-line {
+		position: relative;
+	}
+
+	.kceva-tree-line::before {
+		content: '';
+		position: absolute;
+		left: 0.75rem;
+		top: 0;
+		bottom: 0;
+		width: 1px;
+		background: linear-gradient(
+			to bottom,
+			var(--color-kceva-border-bright) 0%,
+			var(--color-kceva-border) 100%
+		);
+	}
+
+	.kceva-tree-node::before {
+		content: '';
+		position: absolute;
+		left: 0.75rem;
+		top: 1rem;
+		width: 0.75rem;
+		height: 1px;
+		background: var(--color-kceva-border-bright);
+	}
+
+	.kceva-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.25rem 0.625rem;
+		border-radius: 6px;
+		font-size: 0.75rem;
+		font-weight: 500;
+		font-family: var(--font-mono);
+	}
+
+	.kceva-badge-green {
+		background-color: rgba(74, 222, 128, 0.1);
+		color: var(--color-kceva-green);
+		border: 1px solid rgba(74, 222, 128, 0.2);
+	}
+
+	.kceva-badge-amber {
+		background-color: rgba(251, 191, 36, 0.1);
+		color: var(--color-kceva-amber);
+		border: 1px solid rgba(251, 191, 36, 0.2);
+	}
+
+	.kceva-badge-red {
+		background-color: rgba(248, 113, 113, 0.1);
+		color: var(--color-kceva-red);
+		border: 1px solid rgba(248, 113, 113, 0.2);
+	}
+
+	.kceva-badge-blue {
+		background-color: rgba(96, 165, 250, 0.1);
+		color: var(--color-kceva-blue);
+		border: 1px solid rgba(96, 165, 250, 0.2);
+	}
+
+	.kceva-badge-dim {
+		background-color: var(--color-kceva-surface-2);
+		color: var(--color-kceva-text-dim);
+		border: 1px solid var(--color-kceva-border);
+	}
+
+	.kceva-section-header {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+	}
+
+	.kceva-section-number {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 8px;
+		background-color: var(--color-kceva-surface-2);
+		border: 1px solid var(--color-kceva-border-bright);
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--color-kceva-green);
+	}
+
+	.kceva-divider {
+		height: 1px;
+		background: linear-gradient(
+			to right,
+			transparent,
+			var(--color-kceva-border-bright),
+			transparent
+		);
+	}
+
+	.kceva-log-entry {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		line-height: 1.6;
+		padding: 0.25rem 0.5rem;
+		border-radius: 4px;
+		display: flex;
+		gap: 0.5rem;
+		align-items: flex-start;
+	}
+
+	.kceva-log-time {
+		color: var(--color-kceva-text-faint);
+		flex-shrink: 0;
+	}
+
+	.kceva-log-info {
+		color: var(--color-kceva-text-dim);
+	}
+
+	.kceva-log-warn {
+		color: var(--color-kceva-amber);
+	}
+
+	.kceva-log-error {
+		color: var(--color-kceva-red);
+	}
+
+	.kceva-log-success {
+		color: var(--color-kceva-green);
+	}
+
+	.kceva-modal-overlay {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(0, 0, 0, 0.7);
+		backdrop-filter: blur(4px);
+		z-index: 50;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		animation: fade-in 0.2s ease;
+	}
+
+	.kceva-modal {
+		background-color: var(--color-kceva-surface);
+		border: 1px solid var(--color-kceva-border-bright);
+		border-radius: 16px;
+		max-width: 600px;
+		width: 100%;
+		max-height: 85vh;
+		overflow-y: auto;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(74, 222, 128, 0.05);
+		animation: slide-up 0.3s ease;
+	}
+
+	.kceva-tab {
+		padding: 0.5rem 1rem;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: var(--color-kceva-text-dim);
+		border-bottom: 2px solid transparent;
+		transition: all 0.2s ease;
+		cursor: pointer;
+	}
+
+	.kceva-tab:hover {
+		color: var(--color-kceva-text);
+	}
+
+	.kceva-tab-active {
+		color: var(--color-kceva-green);
+		border-bottom-color: var(--color-kceva-green);
+	}
+
+	.kceva-tab-active:hover {
+		color: var(--color-kceva-green-bright);
+	}
+}
+
+@keyframes pulse-dot {
+	0%, 100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.5;
+		transform: scale(0.85);
+	}
+}
+
+@keyframes rotate-border {
+	to {
+		--angle: 360deg;
+	}
+}
+
+@keyframes fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.kceva-fade-in {
+	animation: fade-in-up 0.3s ease;
+}
+
+@keyframes shimmer {
+	0% { background-position: -200% 0; }
+	100% { background-position: 200% 0; }
+}
+
+.kceva-shimmer {
+	background: linear-gradient(
+		90deg,
+		var(--color-kceva-surface) 25%,
+		var(--color-kceva-surface-2) 50%,
+		var(--color-kceva-surface) 75%
+	);
+	background-size: 200% 100%;
+	animation: shimmer 1.5s infinite;
+}
