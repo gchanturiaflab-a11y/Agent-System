@@ -1,4 +1,4 @@
-﻿<script>
+<script>
 	import { Layers, Users, KeyRound, Wrench, Bot } from '@lucide/svelte';
 
 	let { activeTab = $bindable('workflow'), agentCount = 0, keyCount = 0, projectCount = 0, hasActiveRun = false } = $props();
