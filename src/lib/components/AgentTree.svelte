@@ -44,18 +44,18 @@
 	}
 
 	const roleConfig = {
-		scanner:      { icon: Search,     color: 'var(--color-role-scanner)',      label: 'Scanner' },
-		orchestrator: { icon: Network,    color: 'var(--color-role-orchestrator)', label: 'Orchestrator' },
-		architect:    { icon: PenTool,    color: 'var(--color-role-architect)',    label: 'Architect' },
-		coder:        { icon: Code2,      color: 'var(--color-role-coder)',        label: 'Coder' },
-		tester:       { icon: TestTube,   color: 'var(--color-role-tester)',       label: 'Tester' },
-		reviewer:     { icon: Microscope, color: 'var(--color-role-reviewer)',     label: 'Reviewer' },
-		documenter:   { icon: FileText,   color: 'var(--color-role-documenter)',   label: 'Documenter' },
-		debugger:     { icon: Bug,        color: 'var(--color-role-debugger)',     label: 'Debugger' }
+		scanner:      { color: 'var(--color-role-scanner)',      label: 'Scanner' },
+		orchestrator: { color: 'var(--color-role-orchestrator)', label: 'Orchestrator' },
+		architect:    { color: 'var(--color-role-architect)',    label: 'Architect' },
+		coder:        { color: 'var(--color-role-coder)',        label: 'Coder' },
+		tester:       { color: 'var(--color-role-tester)',       label: 'Tester' },
+		reviewer:     { color: 'var(--color-role-reviewer)',     label: 'Reviewer' },
+		documenter:   { color: 'var(--color-role-documenter)',   label: 'Documenter' },
+		debugger:     { color: 'var(--color-role-debugger)',     label: 'Debugger' }
 	};
 
 	function getRoleCfg(role) {
-		return roleConfig[role] || { icon: Code2, color: 'var(--color-role-architect)', label: role };
+		return roleConfig[role] || { color: 'var(--color-role-architect)', label: role };
 	}
 </script>
 
@@ -95,13 +95,31 @@
 
 					<div class="agent-top">
 						<div class="agent-avatar" style="background: color-mix(in srgb, {roleCfg.color} 12%, transparent); border-color: color-mix(in srgb, {roleCfg.color} 25%, transparent)">
-						<span class="avatar-icon" style="color: {roleCfg.color}">
-							<svelte:component this={roleCfg.icon} size={15} strokeWidth={1.75} />
-						</span>
-						{#if active}
-							<span class="avatar-pulse" style="background: {roleCfg.color}"></span>
-						{/if}
-					</div>
+							<span class="avatar-icon" style="color: {roleCfg.color}">
+								{#if agent.role === 'scanner'}
+									<Search size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'orchestrator'}
+									<Network size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'architect'}
+									<PenTool size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'coder'}
+									<Code2 size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'tester'}
+									<TestTube size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'reviewer'}
+									<Microscope size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'documenter'}
+									<FileText size={15} strokeWidth={1.75} />
+								{:else if agent.role === 'debugger'}
+									<Bug size={15} strokeWidth={1.75} />
+								{:else}
+									<Code2 size={15} strokeWidth={1.75} />
+								{/if}
+							</span>
+							{#if active}
+								<span class="avatar-pulse" style="background: {roleCfg.color}"></span>
+							{/if}
+						</div>
 						<div class="agent-info">
 							<div class="agent-name">{agent.name}</div>
 							<div class="agent-role">{agent.role}</div>
@@ -231,8 +249,8 @@
 			transparent 100%
 		);
 		-webkit-mask:
-			linear-gradient(#fff 0 0) content-box,
-			linear-gradient(#fff 0 0);
+			linear-gradient(var(--p-color-neutral-0) 0 0) content-box,
+			linear-gradient(var(--p-color-neutral-0) 0 0);
 		-webkit-mask-composite: xor;
 		mask-composite: exclude;
 		padding: 1px;
@@ -261,7 +279,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}.avatar-pulse {
+	}
+	.avatar-pulse {
 		position: absolute;
 		top: -2px;
 		right: -2px;

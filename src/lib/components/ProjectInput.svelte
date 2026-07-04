@@ -1,5 +1,5 @@
 <script>
-	import { FolderOpen, Search, CheckCircle, XCircle, Folder, Link, Loader2, Plus, X } from '@lucide/svelte';
+	import { FolderOpen, Search, CheckCircle, XCircle, Loader2, Plus, X } from '@lucide/svelte';
 	import { projects, activeProject, knowledgeCache, addToast } from '../stores.js';
 	import { createProject, deleteProject, fetchProjects, updateProject, fetchKnowledge } from '../api.js';
 	import { runScanner } from '../orchestrator.js';
@@ -71,13 +71,6 @@
 			addToast(`Failed to delete: ${err.message}`, 'error');
 		}
 	}
-
-	const scanIcon = {
-		idle: FolderOpen,
-		scanning: Search,
-		done: CheckCircle,
-		failed: XCircle
-	};
 </script>
 
 <div class="section-block">
@@ -148,7 +141,15 @@
 				>
 					<div class="project-main">
 						<span class="project-scan-icon" style="color: var(--color-text-muted)">
-							<svelte:component this={scanIcon[project.scan_status] || FolderOpen} size={15} strokeWidth={2} />
+							{#if project.scan_status === 'scanning'}
+								<Search size={15} strokeWidth={2} />
+							{:else if project.scan_status === 'done'}
+								<CheckCircle size={15} strokeWidth={2} />
+							{:else if project.scan_status === 'failed'}
+								<XCircle size={15} strokeWidth={2} />
+							{:else}
+								<FolderOpen size={15} strokeWidth={2} />
+							{/if}
 						</span>
 						<div class="project-info">
 							<div class="project-name">{project.name}</div>

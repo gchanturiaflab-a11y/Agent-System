@@ -130,13 +130,19 @@
 			<div class="strategy-group">
 				<div class="strategy-group-label">Routing</div>
 				<div class="strategy-pills">
-					{#each Object.entries(strategyIcons) as [value, cfg]}
+					{#each Object.entries(strategyIcons) as [value, cfg] (value)}
 						<button
 							class="strategy-pill {routingStrategy === value ? 'active' : ''}"
 							style="--pill-color: {cfg.color}"
 							onclick={() => routingStrategy = value}
 						>
-							<svelte:component this={cfg.icon} size={14} strokeWidth={2.5} />
+							{#if value === ROUTING_STRATEGIES.RULE_BASED}
+								<Zap size={14} strokeWidth={2.5} />
+							{:else if value === ROUTING_STRATEGIES.CLASSIFIER}
+								<Puzzle size={14} strokeWidth={2.5} />
+							{:else if value === ROUTING_STRATEGIES.LLM_DECISION}
+								<BrainCircuit size={14} strokeWidth={2.5} />
+							{/if}
 							<span>{cfg.short}</span>
 						</button>
 					{/each}
@@ -145,13 +151,19 @@
 			<div class="strategy-group">
 				<div class="strategy-group-label">Validation</div>
 				<div class="strategy-pills">
-					{#each Object.entries(validationIcons) as [value, cfg]}
+					{#each Object.entries(validationIcons) as [value, cfg] (value)}
 						<button
 							class="strategy-pill {validationStrategy === value ? 'active' : ''}"
 							style="--pill-color: {cfg.color}"
 							onclick={() => validationStrategy = value}
 						>
-							<svelte:component this={cfg.icon} size={14} strokeWidth={2.5} />
+							{#if value === VALIDATION_STRATEGIES.SCHEMA_VALIDATION}
+								<SearchCode size={14} strokeWidth={2.5} />
+							{:else if value === VALIDATION_STRATEGIES.TEST_EXECUTION}
+								<TestTube size={14} strokeWidth={2.5} />
+							{:else if value === VALIDATION_STRATEGIES.ADVERSARIAL_REVIEW}
+								<ShieldAlert size={14} strokeWidth={2.5} />
+							{/if}
 							<span>{cfg.short}</span>
 						</button>
 					{/each}
